@@ -1,14 +1,19 @@
-export type Theme =
-  'streets-v11' |
-  'outdoors-v11' |
-  'light-v10' |
-  'dark-v10' |
-  'satellite-v9' |
-  'satellite-streets-v11' |
-  'navigation-preview-day-v4' |
-  'navigation-preview-night-v4' |
-  'navigation-guidance-day-v4' |
-  'navigation-guidance-night-v4';
+const tuple = <T extends string>(...args: T[]) => args;
+
+export const themesNames = tuple(
+  'streets-v11',
+  'outdoors-v11',
+  'light-v10',
+  'dark-v10',
+  'satellite-v9',
+  'satellite-streets-v11',
+  'navigation-preview-day-v4',
+  'navigation-preview-night-v4',
+  'navigation-guidance-day-v4',
+  'navigation-guidance-night-v4',
+);
+
+export type Theme = (typeof themesNames)[number]
 
 export default {
   url(theme: Theme = 'light-v10') {

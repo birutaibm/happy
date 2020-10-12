@@ -1,17 +1,17 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiPlus, IoIosColorPalette } from 'react-icons/all';
 import { Map, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
-import mapbox, { Theme as MapboxTheme } from '../utils/mapbox';
+import mapbox, { Theme as MapboxTheme, themesNames as themes } from '../utils/mapbox';
 
 import mapMarker from '../assets/images/map-marker.svg';
 
 import '../styles/pages/app.css';
 
 const OrphanagesMap: React.FC = () => {
-  const openstreetmap = "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png";
+  // const openstreetmap = "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png";
   const [mapboxTheme, setMapboxTheme] = useState<MapboxTheme>();
   const ul = useRef<HTMLUListElement>(null);
   const themeButton = useRef<HTMLDivElement>(null);
@@ -25,18 +25,6 @@ const OrphanagesMap: React.FC = () => {
   }, []);
 
   const ThemeSelector = useCallback(() => {
-    const themes: MapboxTheme[] = [
-      'streets-v11',
-      'outdoors-v11',
-      'light-v10',
-      'dark-v10',
-      'satellite-v9',
-      'satellite-streets-v11',
-      'navigation-preview-day-v4',
-      'navigation-preview-night-v4',
-      'navigation-guidance-day-v4',
-      'navigation-guidance-night-v4'
-    ];
     return (
       <div className="theme-container" onMouseLeave={hideThemes}>
         <ul ref={ul} className="theme-options">
