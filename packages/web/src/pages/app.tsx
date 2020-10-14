@@ -1,14 +1,21 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FiPlus, IoIosColorPalette } from 'react-icons/all';
-import { Map, TileLayer } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
+import { FiArrowRight, FiPlus, IoIosColorPalette } from 'react-icons/all';
+import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 
 import mapbox, { Theme as MapboxTheme, themesNames as themes } from '../utils/mapbox';
-
+import mapIcon from '../utils/mapIcon';
 import mapMarker from '../assets/images/map-marker.svg';
 
 import '../styles/pages/app.css';
+import api from '../services/api';
+
+interface Orphanage {
+  id: number,
+  name: string,
+  latitude: number,
+  longitude: number,
+}
 
 const OrphanagesMap: React.FC = () => {
   // const openstreetmap = "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png";
@@ -50,6 +57,14 @@ const OrphanagesMap: React.FC = () => {
     );
   }, [hideThemes]);
 
+  const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
+
+  useEffect(() => {
+    api.get('orphanages').then(({data}) => {
+      setOrphanages(data);
+    });
+  }, []);
+
   return (
     <div id="page-map">
       <aside>
@@ -69,9 +84,23 @@ const OrphanagesMap: React.FC = () => {
         style={{ width: '100%', height: '100%'}}
       >
         <TileLayer url={mapbox.url(mapboxTheme)}/>
+        {orphanages.map(orphanage => (
+          <Marker
+            key={orphanage.id}
+            icon={mapIcon}
+            position={[orphanage.latitude, orphanage.longitude]}
+          >
+            <Popup closeButton={false} minWidth={240} maxWidth={240} className="map-popup">
+              {orphanage.name}
+              <Link to={`/orphanages/${orphanage.id}`}>
+                <FiArrowRight size={20} color="#fff"/>
+              </Link>
+            </Popup>
+          </Marker>
+        ))}
       </Map>
       <ThemeSelector />
-      <Link to="" className="create-orphanage">
+      <Link to="orphanages/create" className="create-orphanage">
         <FiPlus size={32} color="#fff" />
       </Link>
     </div>
