@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 // import { FaWhatsapp } from "react-icons/fa";
 import { FiClock, FiInfo } from "react-icons/fi";
 import { Map, Marker, TileLayer } from "react-leaflet";
 
 import happyMapIcon from '../utils/mapIcon';
 
-import '../styles/pages/orphanage.css';
 import Sidebar from "../components/Sidebar";
 import { useState } from "react";
 import api from "../services/api";
-import { useParams } from "react-router-dom";
+import '../styles/pages/orphanage.css';
 
 interface Orphanage {
   name: string,

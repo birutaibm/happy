@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import { FiArrowRight, FiPlus, IoIosColorPalette } from 'react-icons/all';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 
+import api from '../services/api';
 import mapbox, { Theme as MapboxTheme, themesNames as themes } from '../utils/mapbox';
 import mapIcon from '../utils/mapIcon';
+
 import mapMarker from '../assets/images/map-marker.svg';
 
 import '../styles/pages/app.css';
-import api from '../services/api';
 
 interface Orphanage {
   id: number,
